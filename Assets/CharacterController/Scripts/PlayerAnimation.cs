@@ -1,0 +1,59 @@
+using UnityEngine;
+
+public class PlayerAnimation : MonoBehaviour
+{
+    [SerializeField] private Animator _animator;
+    [SerializeField] private float locomotionBlendSpeed = 0.02f;
+
+    private PlayerLocomotionInput _playerLocomotionInput;
+    private PlayerState _playerState;
+    private PlayerController _playerController;
+
+    private static int inputXHash = Animator.StringToHash("inputX");
+    private static int inputYHash = Animator.StringToHash("inputY");
+    private static int inputMagnitudeHash = Animator.StringToHash("inputMagnitude");
+    private static int isGroundedHash = Animator.StringToHash("isGrounded");
+    private static int isJumpingHash = Animator.StringToHash("isJumping");
+    private static int isFallingHash = Animator.StringToHash("isFalling");
+    private static int isCrouchingHash = Animator.StringToHash("isCrouching");  // Added crouch hash
+
+    private Vector3 _currentBlendInput = Vector3.zero;
+
+    private void Awake()
+    {
+        _playerLocomotionInput = GetComponent<PlayerLocomotionInput>();
+        _playerState = GetComponent<PlayerState>();
+        _playerController = GetComponent<PlayerController>();
+    }
+
+    private void Update()
+    {
+        UpdateAnimationState();
+    }
+
+    private void UpdateAnimationState()
+    {
+        bool isIdling = _playerState.CurrentPlayerMovementState == PlayerMovementState.Idling;
+        bool isRunning = _playerState.CurrentPlayerMovementState == PlayerMovementState.Running;
+        bool isSprinting = _playerState.CurrentPlayerMovementState == PlayerMovementState.Sprinting;
+        bool isJumping = _playerState.CurrentPlayerMovementState == PlayerMovementState.Jumping;
+        bool isFalling = _playerState.CurrentPlayerMovementState == PlayerMovementState.Falling;
+        bool isGrounded = _playerController.IsActuallyGrounded;
+
+        Vector2 input = isSprinting ? _playerLocomotionInput.moveInput * 1.5f : _playerLocomotionInput.moveInput;
+
+        _currentBlendInput = Vector3.Lerp(
+            _currentBlendInput,
+            new Vector3(input.x, input.y, 0f),
+            locomotionBlendSpeed * Time.deltaTime
+        );
+
+        _animator.SetBool(isGroundedHash, isGrounded);
+        _animator.SetBool(isJumpingHash, isJumping);
+        _animator.SetBool(isFallingHash, isFalling);
+        _animator.SetFloat(inputXHash, _currentBlendInput.x);
+        _animator.SetFloat(inputYHash, _currentBlendInput.y);
+        _animator.SetFloat(inputMagnitudeHash, _currentBlendInput.magnitude);
+
+    }
+}
