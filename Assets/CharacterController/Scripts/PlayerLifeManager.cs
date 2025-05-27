@@ -8,11 +8,22 @@ public class PlayerLifeManager : MonoBehaviour
     private void Start()
     {
         currentLives = maxLives;
+
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.UpdateLives(currentLives); // Show at start
+        }
+        else
+        {
+            Debug.LogError("UIManager.Instance is null! Make sure UIManager is in the scene.");
+        }
     }
 
     public void TakeDamage()
     {
-        currentLives--;
+        currentLives--; // Decrease lives first
+
+        UIManager.Instance.UpdateLives(currentLives); // THEN update UI
 
         if (GameManager.Instance == null)
         {
@@ -30,9 +41,9 @@ public class PlayerLifeManager : MonoBehaviour
         }
     }
 
-
     public void ResetLives()
     {
-        currentLives = maxLives;
+        currentLives = maxLives; // Reset first
+        UIManager.Instance.UpdateLives(currentLives); // Then update UI
     }
 }

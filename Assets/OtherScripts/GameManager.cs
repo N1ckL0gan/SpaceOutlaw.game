@@ -1,16 +1,18 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;  // Import TMPro namespace
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
+    public Transform startSpawnPoint;  // Assign this in the Inspector
 
     private Transform currentCheckpoint;
     private float playTime = 0f;
 
     [Header("UI")]
     public GameObject gameOverScreen;
-    public Text timerText;
+    public TextMeshProUGUI timerText;  // Use TMP component here
 
     private bool isGameOver = false;
 
@@ -20,6 +22,12 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             Debug.Log("GameManager instance assigned.");
+
+            // Set start location as initial checkpoint
+            if (startSpawnPoint != null)
+                currentCheckpoint = startSpawnPoint;
+            else
+                Debug.LogWarning("Start spawn point not assigned in GameManager.");
         }
         else
         {
@@ -28,12 +36,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     void Update()
     {
         if (!isGameOver)
         {
             playTime += Time.deltaTime;
+            UpdateTimerUI();
+        }
+    }
+
+    private void UpdateTimerUI()
+    {
+        if (timerText != null)
+        {
+            int minutes = Mathf.FloorToInt(playTime / 60);
+            int seconds = Mathf.FloorToInt(playTime % 60);
+            timerText.text = $"Time: {minutes:00}:{seconds:00}";
         }
     }
 

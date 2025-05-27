@@ -11,7 +11,9 @@ public class PlayerLocomotionInput : MonoBehaviour, PlayerControls.IPlayerLocomo
     public Vector2 lookInput { get; private set; }
     public bool SprintToggledOn { get; private set; }
     public bool JumpPressed { get; private set; }
-    public bool Crouch { get; private set; }
+    public bool allowLook = true;
+
+
 
     private void Awake()
     {
@@ -53,7 +55,10 @@ public class PlayerLocomotionInput : MonoBehaviour, PlayerControls.IPlayerLocomo
 
     public void OnLook(InputAction.CallbackContext context)
     {
-        lookInput = context.ReadValue<Vector2>();
+        if (allowLook)
+            lookInput = context.ReadValue<Vector2>();
+        else
+            lookInput = Vector2.zero;
     }
 
     public void OnToggleSprint(InputAction.CallbackContext context)
