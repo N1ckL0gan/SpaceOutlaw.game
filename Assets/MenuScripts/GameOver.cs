@@ -30,8 +30,19 @@ public class GameOver : MonoBehaviour
 
     public void RestartGame()
     {
+        // Resume time
         Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Reload current scene
+
+        // Hide the Game Over UI if still active
+        if (gameOverUI != null)
+            gameOverUI.SetActive(false);
+
+        // Re-enable look controls (if you disabled them)
+        if (playerInput != null)
+            playerInput.allowLook = true;
+
+        // Reload the current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void QuitGame()

@@ -10,7 +10,6 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
     public PlayerLocomotionInput playerInput; // Assigned via Inspector
 
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -25,7 +24,6 @@ public class PauseMenu : MonoBehaviour
             }
         }
     }
-  
 
     public void Resume()
     {
@@ -33,7 +31,8 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         GameIsPaused = false;
 
-        playerInput.allowLook = true; //  Unlock it again
+        if (playerInput != null)
+            playerInput.allowLook = true; // Unlock it again
     }
 
     void Pause()
@@ -42,16 +41,25 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         GameIsPaused = true;
 
-        playerInput.allowLook = false; //  This locks the look input
+        if (playerInput != null)
+            playerInput.allowLook = false; // Lock the look input
     }
 
-
-    public void LoadMainMenu()
+    public void RestartGame()
     {
-        Time.timeScale = 1f; // Reset time in case it's paused
-        SceneManager.LoadScene(0); // Load MainMenu by index
-    }
+        Debug.Log("Restarting Game...");
 
+        Time.timeScale = 1f; // Resume time before restarting
+        GameIsPaused = false;
+
+        if (pauseMenuUI != null)
+            pauseMenuUI.SetActive(false);
+
+        if (playerInput != null)
+            playerInput.allowLook = true;
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 
     public void QuitGame()
     {

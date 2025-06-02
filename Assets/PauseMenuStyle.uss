@@ -1,0 +1,50 @@
+:root {
+}
+
+.pause-menu-button {
+    background-size: 100% 100%;
+    width: 450px;
+    height: 120px;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    -unity-font-definition: url("project://database/Library/unity%20default%20resources?fileID=10102&guid=0000000000000000e000000000000000&type=0#LegacyRuntime");
+    -unity-font-style: bold-and-italic;
+    color: rgb(204, 204, 204);
+    font-size: 45px;
+    border-left-color: rgb(229, 229, 229);
+    border-right-color: rgb(229, 229, 229);
+    border-top-color: rgb(229, 229, 229);
+    border-bottom-color: rgb(229, 229, 229);
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 5px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    -unity-text-align: middle-center;
+    justify-content: space-evenly;
+    align-self: center;
+    align-content: stretch;
+    align-items: stretch;
+    text-shadow: 5px 5px 0 rgba(0, 0, 0, 0.47);
+}
+
+.resume-button {
+    background-color: rgb(21, 163, 32);
+}
+
+.resume-button:hover {
+    background-color: rgba(21, 163, 32, 0.37);
+}
+
+.exit-button {
+    background-color: rgb(197, 15, 15);
+}
+
+.exit-button:hover {
+    background-color: rgba(197, 15, 15, 0.33);
+}
