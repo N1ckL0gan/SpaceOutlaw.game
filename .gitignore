@@ -83,3 +83,5 @@ crashlytics-build.properties
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db.meta
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers.meta
+Assets/Drone/model/Drone Blender_2.90.blend
+Assets/Drone/model/Drone Textures/studio_small_03_8k.hdr
